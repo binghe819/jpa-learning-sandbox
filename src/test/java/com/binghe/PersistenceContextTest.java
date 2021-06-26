@@ -33,7 +33,7 @@ public class PersistenceContextTest {
             // when
             entityManager.persist(member); // 1차 캐시에 저장.
 
-            Member findMember1 = entityManager.find(Member.class, 100L); // 1차 캐시에서 조회.
+            Member findMember1 = entityManager.find(Member.class, 100L); // 1차 캐시에서 조회. (쿼리를 찌르지 않는다.)
 
             // then
             assertThat(member).isSameAs(findMember1);
@@ -70,6 +70,44 @@ public class PersistenceContextTest {
 
             // then
             assertThat(member).isSameAs(findMember1);
+            assertThat(findMember1).isSameAs(findMember2);
+
+            tx.commit(); // flush + 트랜잭션 commit
+        } catch (Exception e) {
+            tx.rollback();
+        } finally {
+            entityManager.close();
+        }
+        entityManagerFactory.close();
+    }
+
+    @DisplayName("동일성 보장 - JPA는 DB로부터 엔티티를 가져오면 1차 캐싱에 저장하고, 동일성을 보장한다.")
+    @Test
+    void identityByDB() {
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("test_persistence_config");
+
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+
+        EntityTransaction tx = entityManager.getTransaction();
+        tx.begin();
+
+        try {
+            // given
+            Member member = new Member();
+            member.setId(100L);
+            member.setName("binghe");
+
+            // when
+            entityManager.persist(member); // 1차 캐시에 저장.
+
+            entityManager.flush();
+            entityManager.clear();
+
+            Member findMember1 = entityManager.find(Member.class, member.getId()); // 1차 캐시에서 조회
+            Member findMember2 = entityManager.find(Member.class, member.getId()); // 1차 캐시에서 조회
+
+            // then
+            assertThat(member).isNotSameAs(findMember1); // 중요 포인트 (동일한 트랜잭션 내에서만 동일성을 보장한다)
             assertThat(findMember1).isSameAs(findMember2);
 
             tx.commit(); // flush + 트랜잭션 commit
@@ -125,8 +163,8 @@ public class PersistenceContextTest {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
 
         // given - Member를 DB에 저장
-        EntityTransaction tx1 = entityManager.getTransaction();
-        tx1.begin();
+        EntityTransaction tx = entityManager.getTransaction();
+        tx.begin();
 
         try {
             Member member = new Member();
@@ -135,47 +173,24 @@ public class PersistenceContextTest {
 
             entityManager.persist(member);
 
-            tx1.commit();
-        } catch (Exception e) {
-            tx1.rollback();
-        } finally {
-            entityManager.close();
-        }
+            entityManager.flush();
+            entityManager.clear();
 
-        // when - DB로 부터 멤버를 가져와서 수정하면.
-        EntityManager entityManager2 = entityManagerFactory.createEntityManager();
-
-        EntityTransaction tx2 = entityManager2.getTransaction();
-        tx2.begin();
-
-        try {
-            Member findMember = entityManager2.find(Member.class, 100L);
+            Member findMember = entityManager.find(Member.class, 100L);
             findMember.setName("update binghe");
 
-            tx2.commit();
+            entityManager.flush();
+            entityManager.clear();
+
+            Member finalFindMember = entityManager.find(Member.class, 100L);
+
+            assertThat(finalFindMember.getName()).isEqualTo("update binghe");
+
+            tx.commit();
         } catch (Exception e) {
-            tx2.rollback();
+            tx.rollback();
         } finally {
-            entityManager2.close();
-        }
-
-        // then - 수정 내역이 DB에 적용된다.
-        EntityManager entityManager3 = entityManagerFactory.createEntityManager();
-
-        EntityTransaction tx3 = entityManager3.getTransaction();
-        tx3.begin();
-
-        try {
-            Member findMember = entityManager3.find(Member.class, 100L);
-
-            System.out.println("####" + findMember.getName());
-            assertThat(findMember.getName()).isEqualTo("update binghe");
-
-            tx3.commit();
-        } catch (Exception e) {
-            tx3.rollback();
-        } finally {
-            entityManager3.close();
+            entityManager.close();
         }
         entityManagerFactory.close();
     }
