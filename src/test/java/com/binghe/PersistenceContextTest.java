@@ -179,4 +179,32 @@ public class PersistenceContextTest {
         }
         entityManagerFactory.close();
     }
+
+    @DisplayName("기본 키 전략 - 기본 키 전략을 IDENTITY로 하면 persist할 때 바로 SQL이 날라간다.")
+    @Test
+    void primarykeyByIdentity() {
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("test_persistence_config");
+
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+
+        EntityTransaction tx = entityManager.getTransaction();
+        tx.begin();
+
+        try {
+            // given
+            AutoIncrementMember member = new AutoIncrementMember();
+            member.setName("binghe");
+
+            // when
+            entityManager.persist(member);
+            System.out.println("================ IDENTITY 전략 테스트 - 트랜잭션 전에 쿼리 이미 날림. ================");
+
+            tx.commit(); // flush + 트랜잭션 commit
+        } catch (Exception e) {
+            tx.rollback();
+        } finally {
+            entityManager.close();
+        }
+        entityManagerFactory.close();
+    }
 }

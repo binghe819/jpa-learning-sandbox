@@ -8,24 +8,20 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 /**
- * 기본키 자동 매핑을 사용하지 않고, 테스트하기 위한 멤버 도메인.
+ * IDENTITY, SEQUENCE 기본키 DB전략을 테스트하기 위한 멤버 엔티티.
  */
 @Entity
-@Table(name = "member")
-public class Member {
+@Table(name = "auto_member")
+public class AutoIncrementMember {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "name")
     private String name;
 
-    public Member() {
-    }
-
-    public Member(Long id, String name) {
-        this.id = id;
-        this.name = name;
+    public AutoIncrementMember() {
     }
 
     public Long getId() {
