@@ -2,6 +2,12 @@
 
 <br>
 
+# 학습 테스트 내용
+- [N:1 상황에서 연관관계 단방향 테스트](./src/test/java/com/binghe/one_way/OneWayTest.java)
+- [N:1 상황에서 연관관계 양방향 테스트](./src/test/java/com/binghe/two_way/TwoWayTest.java)
+
+<br>
+
 # 목차
 
 <br>
