@@ -1,10 +1,7 @@
 package com.binghe.one_way;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import com.binghe.one_way.Member;
-import com.binghe.one_way.Team;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
@@ -15,7 +12,6 @@ import org.junit.jupiter.api.Test;
 @DisplayName("연관관계 주인 단방향 테스트")
 public class OneWayTest {
 
-    @DisplayName("")
     @Test
     void owner() {
         EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("test_persistence_config");
@@ -50,6 +46,7 @@ public class OneWayTest {
 
             tx.commit();
         } catch (Exception e) {
+            System.out.println("Error!!! " + e.getMessage());
             tx.rollback();
         } finally {
             entityManager.close();
