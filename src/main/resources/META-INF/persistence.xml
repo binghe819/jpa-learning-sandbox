@@ -5,6 +5,8 @@
   <persistence-unit name="test_persistence_config">
     <class>com.binghe.fk_in_primary.one_way.Member</class>
     <class>com.binghe.fk_in_primary.one_way.Locker</class>
+    <class>com.binghe.fk_in_primary.two_way.Member</class>
+    <class>com.binghe.fk_in_primary.two_way.Locker</class>
     <properties>
       <!-- 필수 속성 -->
       <property name="javax.persistence.jdbc.driver" value="org.h2.Driver"/>
@@ -16,7 +18,7 @@
       <property name="hibernate.show_sql" value="true"/>
       <property name="hibernate.format_sql" value="true"/>
       <property name="hibernate.use_sql_comments" value="true"/>
-      <property name="hibernate.hbm2ddl.auto" value="update" />
+      <property name="hibernate.hbm2ddl.auto" value="create" />
     </properties>
   </persistence-unit>
 </persistence>
