@@ -91,4 +91,46 @@ public class ProxyTest {
         }
         entityManagerFactory.close();
     }
+
+    @DisplayName("m.getReference()를 통해 가져온 프록시(가짜) 객체는 처음 사용할 때만 영속성 컨텍스트에 초기화 요청을 한다. ")
+    @Test
+    void getReferenceInitialize() {
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("test_persistence_config");
+
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+
+        EntityTransaction tx = entityManager.getTransaction();
+        tx.begin();
+
+        try {
+            // given
+            Member member = new Member();
+            member.setName("binghe");
+
+            entityManager.persist(member);
+
+            entityManager.flush();
+            entityManager.clear();
+
+            // when
+            Member findMember = entityManager.getReference(Member.class, member.getId());
+            System.out.println("하이버네이트가 만들어주는 가짜 객체: " + findMember.getClass());
+            System.out.println("========== 이 시점엔 쿼리를 날리지 않는다. ==========");
+
+            // then
+            assertThat(findMember.getId()).isEqualTo(member.getId());
+            System.out.println("========== 이 시점에 쿼리를 날린다. (초기화) ==========");
+            assertThat(findMember.getName()).isEqualTo("binghe"); // 객체의 속성을 처음 사용할 때이므로, 영속성 컨텍스트에 초기화 요청을 한다.
+            System.out.println("========== 이 시점엔 쿼리를 날리지 않는다. (재사용) ==========");
+            System.out.println(findMember.getName());
+
+            tx.commit();
+        } catch (Exception e) {
+            System.out.println("Error!! -> " + e);
+            tx.rollback();
+        } finally {
+            entityManager.close();
+        }
+        entityManagerFactory.close();
+    }
 }
