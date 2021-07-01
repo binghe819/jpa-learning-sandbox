@@ -9,6 +9,7 @@ import javax.persistence.Persistence;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+@DisplayName("지연 로딩 테스트")
 public class LazyTest {
 
     @DisplayName("fetch 설정값을 FetchType.LAZY로하면 해당 의존성 객체는 프록시 객체를 만든다. 그리고 사용하는 시점에 쿼리를 통해 가져온다.")
