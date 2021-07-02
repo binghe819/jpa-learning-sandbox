@@ -12,5 +12,7 @@
     - [N : N](https://github.com/binghe819/jpa-learning-sandbox/tree/relation-mapping-N-N)
     - [상속관계 매핑](https://github.com/binghe819/jpa-learning-sandbox/tree/relation-mapping-abstract)
     - [@MappedSuperClass](https://github.com/binghe819/jpa-learning-sandbox/tree/relation-mapping-mappedsuperclass)
-- 프록시
+- 프록시와 연관관계 관리
     - [프록시](https://github.com/binghe819/jpa-learning-sandbox/tree/proxy)
+    - [지연 로딩과 즉시 로딩](https://github.com/binghe819/jpa-learning-sandbox/tree/proxy-lazy-and-eager)
+    - [영속성 전이와 고아 객체](https://github.com/binghe819/jpa-learning-sandbox/tree/cascade)
