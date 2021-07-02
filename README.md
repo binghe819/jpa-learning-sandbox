@@ -3,6 +3,8 @@
 <br>
 
 # 학습 테스트 내용
+- [영속성 전이 (CASCADE) 테스트](./src/test/java/com/binghe/CascadeTest.java)
+- [고아 객체 (Orphan) 테스트](./src/test/java/com/binghe/OrphanTest.java)
 
 <br>
 
