@@ -16,7 +16,8 @@ public class Parent {
 
     private String name;
 
-    @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL)
+//    @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL) // CasCade 테스트
+    @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Child> childs = new ArrayList<>();
 
     public void addChild(Child child) {
