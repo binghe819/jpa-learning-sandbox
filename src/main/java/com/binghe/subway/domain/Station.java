@@ -54,4 +54,9 @@ public class Station {
     public int hashCode() {
         return Objects.hash(id);
     }
+
+    public void changeName(String name) {
+        this.name = name;
+
+    }
 }
