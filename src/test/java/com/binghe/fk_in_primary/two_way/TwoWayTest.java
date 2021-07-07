@@ -37,10 +37,10 @@ public class TwoWayTest {
             entityManager.clear();
 
             // then
-            Member findMember = entityManager.find(Member.class, member.getId());
-            Locker findLocker = findMember.getLocker();
+            Locker findLocker = entityManager.find(Locker.class, locker.getId());
+            Member findMember = findLocker.getMember();
 
-            assertThat(findLocker.getMember()).isSameAs(findMember);
+            assertThat(findMember.getName()).isEqualTo("binghe");
 
             tx.commit();
         } catch (Exception e) {
