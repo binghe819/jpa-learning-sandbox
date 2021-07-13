@@ -5,6 +5,9 @@
   <persistence-unit name="test_persistence_config">
     <class>com.binghe.Member</class>
     <class>com.binghe.Team</class>
+    <class>com.binghe.Address</class>
+    <class>com.binghe.Order</class>
+    <class>com.binghe.Product</class>
     <properties>
       <!-- 필수 속성 -->
       <property name="javax.persistence.jdbc.driver" value="org.h2.Driver"/>
