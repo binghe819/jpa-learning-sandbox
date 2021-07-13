@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 @DisplayName("영속성 전이 (CASCADE) 테스트")
 public class CascadeTest {
 
+    @DisplayName("Parent를 영속화하면 내부의 엔티티(Child)가 자동으로 영속화된다.")
     @Test
     void cascadeTest() {
         EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("test_persistence_config");
