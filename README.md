@@ -13,6 +13,10 @@
 
 <br>
 
+## DB와 객체에서의 다대다
+
+<br>
+
 **DB에서의 다대다**
 
 <p align="center"><img src="./image/db_N_vs_N.png"><br>출처: 자바 ORM 표준 JPA 프로그래밍</p>
@@ -31,11 +35,15 @@
 
 <br>
 
-**다대다 사용법**
+## JPA 다대다 사용법
 
 * `@ManyToMany` 사용
 * `@JoinTable`로 연결 테이블(중간 테이블) 지정
 * 다대다 맵핑도 단방향, 양방향 모두 가능하다.
+
+<br>
+
+## 다대다의 한계와 극복 방법
 
 <br>
 
@@ -54,7 +62,46 @@
 
 <p align="center"><img src="./image/N_vs_N_limit_solution.png"><br>출처: 자바 ORM 표준 JPA 프로그래밍</p>
 
-* 연결 테이블용 엔티티 추가 (연결 테이블을 엔티티로 승격시키는 것!)
+* 연결 테이블용 엔티티 추가 (**연결 테이블을 엔티티로 승격시키는 것!**)
+    * 회원상품 엔티티 쪽이 외래 키를 가지고 있으므로 연관관계의 주인이다.
+    * 상품 엔티티에서 회원상품 엔티티로 객체 그래프 탐색 기능이 필요하지 않다고 판단해서 연관관계를 만들지 않았다.
 * `@ManyToMany` -> `@OneToMany` + `@ManyToOne`
 
 > 가능한 다대다 관계를 사용하지 않는 것이 좋고, 만약 사용할 일이 있으면 1 : N + N : 1 방식을 사용하라.
+
+<br>
+
+## 키 생성 전략
+
+<br>
+
+**복합 기본 키**
+
+<br>
+
+**새로운 기본 키 사용**
+
+<br>
+
+**두 개 이상의 컬럼을 묶어 unique 설정**
+
+```java
+@Entity
+@Table(
+	name="tableName",
+    uniqueConstraints={
+        @UniqueConstraint(
+            name={"contstraintName"}
+            columnNames={"col1", "col2"}
+        )
+    }
+)
+@Data
+public class Entity{
+    @Column(name="col1")
+    int col1;
+    
+    @Column(name="col2")
+    int col2;
+}
+```
