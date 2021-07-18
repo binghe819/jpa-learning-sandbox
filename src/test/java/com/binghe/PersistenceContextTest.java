@@ -16,7 +16,7 @@ public class PersistenceContextTest {
     @Test
     void firstLevelCache() {
         // 로딩 시점에 딱 한번 실행. (DB마다 하나)
-        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("persistence_config");
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("test_persistence_config");
 
         // DB와 커넥션을 해야하는 트랜잭션단위로 EntityManager를 만들어줘야한다. (DB요청마다 하나)
         EntityManager entityManager = entityManagerFactory.createEntityManager();
@@ -36,7 +36,7 @@ public class PersistenceContextTest {
             Member findMember1 = entityManager.find(Member.class, 100L); // 1차 캐시에서 조회. (쿼리를 찌르지 않는다.)
 
             // then
-            assertThat(member).isSameAs(findMember1);
+            assertThat(member).isSameAs(findMember1); // 동일성 보장
 
             tx.commit(); // flush + 트랜잭션 commit
         } catch (Exception e) {
@@ -60,7 +60,7 @@ public class PersistenceContextTest {
         try {
             // given
             Member member = new Member();
-            member.setId(100L);
+            member.setId(100L); //  AUTOINCREMENT 전략 사용하지 않음
             member.setName("binghe");
 
             // when
@@ -107,7 +107,7 @@ public class PersistenceContextTest {
             Member findMember2 = entityManager.find(Member.class, member.getId()); // 1차 캐시에서 조회
 
             // then
-            assertThat(member).isNotSameAs(findMember1); // 중요 포인트 (동일한 트랜잭션 내에서만 동일성을 보장한다)
+            assertThat(member).isNotSameAs(findMember1); // 중요 포인트 (flush하고 clear 했으므로 같지 않다.)
             assertThat(findMember1).isSameAs(findMember2);
 
             tx.commit(); // flush + 트랜잭션 commit
@@ -162,11 +162,11 @@ public class PersistenceContextTest {
 
         EntityManager entityManager = entityManagerFactory.createEntityManager();
 
-        // given - Member를 DB에 저장
         EntityTransaction tx = entityManager.getTransaction();
         tx.begin();
 
         try {
+            // given - Member를 DB에 저장
             Member member = new Member();
             member.setId(100L);
             member.setName("binghe");
@@ -178,6 +178,8 @@ public class PersistenceContextTest {
 
             Member findMember = entityManager.find(Member.class, 100L);
             findMember.setName("update binghe");
+
+            System.out.println("================ UPDATE 쿼리를 날린다. ================");
 
             entityManager.flush();
             entityManager.clear();
@@ -211,8 +213,11 @@ public class PersistenceContextTest {
             member.setName("binghe");
 
             // when
-            entityManager.persist(member);
+            entityManager.persist(member); // id값을 얻기위해 insert 쿼리를 바로 날린다.
             System.out.println("================ IDENTITY 전략 테스트 - 트랜잭션 전에 쿼리 이미 날림. ================");
+
+            // then
+            assertThat(member.getId()).isNotNull();
 
             tx.commit(); // flush + 트랜잭션 commit
         } catch (Exception e) {
