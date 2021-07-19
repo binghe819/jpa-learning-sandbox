@@ -11,7 +11,7 @@ import javax.persistence.TypedQuery;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-// 2
+
 @DisplayName("TypeQuery와 Query 테스트 (차이점)")
 public class TypeQueryAndQueryTest {
 
@@ -74,12 +74,12 @@ public class TypeQueryAndQueryTest {
             entityManager.clear();
 
             // when
-            Query query = entityManager.createQuery("select m.name, m.age from Member as m");
+            Query query = entityManager.createQuery("select m from Member as m");
 
             // then
-            for (Object o : query.getResultList()) {
-                System.out.println(o);
-            }
+            Member findMember = (Member) query.getSingleResult();
+            assertThat(findMember.getName()).isEqualTo(member.getName());
+            assertThat(findMember.getAge()).isEqualTo(member.getAge());
 
             tx.commit();
         } catch (Exception e) {
