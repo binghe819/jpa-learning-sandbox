@@ -1,18 +1,12 @@
-# JPA 놀이터
+# JPA 놀이터 - JPQL
 
 <br>
 
-## 주제
-- [영속성 컨텍스트](https://github.com/binghe819/jpa-learning-sandbox/tree/persistence-context)
-- 연관관계 매핑
-    - [연관관계 주인](https://github.com/binghe819/jpa-learning-sandbox/tree/relation-mapping-owner-of-relationship)
-    - [N : 1](https://github.com/binghe819/jpa-learning-sandbox/tree/relation-mapping-N-1)
-    - [1 : N](https://github.com/binghe819/jpa-learning-sandbox/tree/relation-mapping-1-N)
-    - [1 : 1](https://github.com/binghe819/jpa-learning-sandbox/tree/relation-mapping-1-1)
-    - [N : N](https://github.com/binghe819/jpa-learning-sandbox/tree/relation-mapping-N-N)
-    - [상속관계 매핑](https://github.com/binghe819/jpa-learning-sandbox/tree/relation-mapping-abstract)
-    - [@MappedSuperClass](https://github.com/binghe819/jpa-learning-sandbox/tree/relation-mapping-mappedsuperclass)
-- 프록시와 연관관계 관리
-    - [프록시](https://github.com/binghe819/jpa-learning-sandbox/tree/proxy)
-    - [지연 로딩과 즉시 로딩](https://github.com/binghe819/jpa-learning-sandbox/tree/proxy-lazy-and-eager)
-    - [영속성 전이와 고아 객체](https://github.com/binghe819/jpa-learning-sandbox/tree/cascade)
+## 학습 테스트 내용
+- [집합과 정렬 - count, sum, avg, max, min, group by, order by](./src/test/java/com/binghe/SetAndSortTest.java)
+- 
+
+<br>
+
+
+
