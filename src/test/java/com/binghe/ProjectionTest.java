@@ -188,7 +188,7 @@ public class ProjectionTest {
         entityManagerFactory.close();
     }
 
-    @DisplayName("스칼라 프로젝션 - new 명령어로 조회")
+    @DisplayName("스칼라 프로젝션 - new 명령어로 조회 (Dto 객체 사용)")
     @Test
     void scala_ByNew() {
         EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("test_persistence_config");
