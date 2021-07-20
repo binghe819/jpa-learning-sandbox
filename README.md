@@ -17,3 +17,5 @@
     - [프록시](https://github.com/binghe819/jpa-learning-sandbox/tree/proxy)
     - [지연 로딩과 즉시 로딩](https://github.com/binghe819/jpa-learning-sandbox/tree/proxy-lazy-and-eager)
     - [영속성 전이와 고아 객체](https://github.com/binghe819/jpa-learning-sandbox/tree/cascade)
+- 객체지향 쿼리 언어
+    - [JPQL](https://github.com/binghe819/jpa-learning-sandbox/tree/query-jpql)
