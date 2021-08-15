@@ -10,6 +10,7 @@
 - [프로젝션](./src/test/java/com/binghe/ProjectionTest.java)
 - [페이징 API](./src/test/java/com/binghe/PagingApiTest.java)
 - [조인 (join)](./src/test/java/com/binghe/JoinTest.java)
+- [경로 표현식](./src/test/java/com/binghe/PathExpressionTest.java)
 
 <br>
 
@@ -28,6 +29,7 @@
 - [JPQL 타입 표현](#jpql-타입-표현)
 - [조건식](#조건식)
 - [JPQL 기본 함수](#jpql-기본-함수)
+- [경로 표현식](#경로-표현식)
 
 <br>
 
@@ -333,5 +335,83 @@ select NULLIF(m.username, '관리자') from Member m
 * 사용자 정의 함수
     * 사용하는 DB 방언을 상속받고, 사용자 정의 함수를 등록할 수 있다.
 
+<br>
 
+# 경로 표현식
+
+<br>
+
+**경로 표현식 종류**
+```java
+select m.username -> 상태 필드
+  from Member m
+    join m.team t -> 단일 값 연관 필드
+    join m.orders o -> 컬렉션 값 연관 필드
+where t.name = '팀A'
+```
+* 상태 필드: 단순한 값을 저장하기 위한 필드
+* 연관 필드: 연관관계를 위한 필드
+  * 단일 값 연관 필드: `@ManyToOne`, `@OneToOne`등 대상이 엔티티 (ex. `m.team`)
+  * 컬렉션 값 연관 필드: `@OneToMany`, @ManyToMany`등 대상이 컬렉션 (ex. `m.orders`)
+
+<br>
+
+**경로 표현식 특징**
+
+* 상태 필드
+  * 경로 탐색의 끝. 탐색 X
+* 단일 값 연관 경로
+  * 묵시적 내부 조인 (inner join) 발생. 탐색 O
+  * ex. `select m.team.X From Member m;` -> team은 내부를 계속해서 탐색이 가능하다.
+* 컬렉션 값 연관 경로
+  * 묵시적 내부 조인 (inner join) 발생. 탐색X
+  * ex. `select t.members from Team t;` -> t.members 내부를 계속해서 탐색이 불가능하다. (이유는 컬렉션이기 때문)
+    * 대신 `FROM`절에서 **명시적 조인**을 통해 별칭을 얻으면 별칭을 통해 탐색이 가능하다.
+    * ex. `select m.name from Team t join t.members m`
+
+<br>
+
+> **묵시적 내부 조인이란?**
+> * 경로 표현식에 의해 묵시적으로 SQL 조인 발생.
+> * ex. `select m.team from Member m`을 하면 Member에 속한 team을 가져오기 위해 묵시적으로 inner join이 발생하게 된다.
+> * **항상 묵시적 내부 조인이 발생하지 않게 쿼리를 짜야한다. 잘못하면 수백개의 쿼리가 날라갈 수도 있기 때문.**
+>
+> <br>
+>
+> **명시적 조인이란?**
+> * join 키워드 직접 사용
+> * ex. `select m from Member m join m.team t`
+
+<br>
+
+**경로 표현식 vs SQL**
+
+> 상태 필드
+```sql
+JPQL: select m.username, m.age from Member m
+
+SQL: select m.username, m.age from Member m
+```
+
+<br>
+
+> 단일 값 연관 경로 탐색
+```sql
+JPQL: select o.member from Order o
+
+SQL: select m.* from Orders o inner join Member m on o.member_id = m.id
+```
+* 묵시적 join이 날라가므로, 추후에 문제가 발생시 원인을 찾기 힘들어진다.
+
+<br>
+
+> 컬렉션 값 연관 경로 탐색 예시
+
+```sql
+select t.members from Team t; -> 성공 (하지만 Collection을 반환하므로 좋지 않다.)
+
+select t.members.username from Team t; -> 실패
+
+select m.username from Team t join t.members m; -> 성공
+```
 
