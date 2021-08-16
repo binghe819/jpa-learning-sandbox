@@ -7,6 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import org.hibernate.annotations.BatchSize;
 
 @Entity
 public class Team {
@@ -16,6 +17,7 @@ public class Team {
 
     private String name;
 
+    @BatchSize(size = 100) // 패치 조인 한계 테스트 (FetchJoinLimitTest)할 시 주석을 풀어 테스트하자.
     @OneToMany(mappedBy = "team")
     private List<Member> members = new ArrayList<>();
 
