@@ -11,6 +11,7 @@
 - [페이징 API](./src/test/java/com/binghe/PagingApiTest.java)
 - [조인 (join)](./src/test/java/com/binghe/JoinTest.java)
 - [경로 표현식](./src/test/java/com/binghe/PathExpressionTest.java)
+- [벌크 연산](./src/test/java/com/binghe/BulkOperationTest.java)
 
 <br>
 
@@ -30,6 +31,10 @@
 - [조건식](#조건식)
 - [JPQL 기본 함수](#jpql-기본-함수)
 - [경로 표현식](#경로-표현식)
+- [다형성 쿼리](#다형성-쿼리)
+- [엔티티 직접 사용](#엔티티-직접-사용)
+- [Named 쿼리 - 정적 쿼리](#named-쿼리---정적-쿼리)
+- [벌크 연산](#벌크-연산)
 
 <br>
 
@@ -414,4 +419,129 @@ select t.members.username from Team t; -> 실패
 
 select m.username from Team t join t.members m; -> 성공
 ```
+
+# 다형성 쿼리
+Item이 상위 클래스고, Book, Movie, Album이 상속받는 하위 클래스인 경우.
+
+* 조회 대상을 특정 자식으로 한정할 수 있다.
+* ex. Item 중에 Book, Movie를 조회해라
+  * JPQL: `select i from Item i where type(i) IN (Book, Movie)`
+  * SQL: `select i from i where i.DTYPE in ('B', 'M')`으로 변환된다.
+* `TREAT` (JPA 2.1)
+  * 자바의 타입 캐스팅과 유사하다.
+  * 상속 구조에서 부모 타입을 특정 자식 타입으로 다룰 때 사용한다.
+  * ex. `select i from Item i where treat(i as Book).author = 'kim'`
+
+<br>
+
+# 엔티티 직접 사용
+**JPQL에서 엔티티를 직접 사용하면 SQL에서 해당 엔티티의 기본 키 값을 사용한다.**
+
+<br>
+
+:point_right: 예시 1
+
+```java
+select count(m.id) from Member m // 엔티티의 아이디를 사용
+select count(m) from Member m    // 엔티티를 직접 사용
+```
+
+위 JPQL 둘 다 동일한 SQL이 실행된다.
+
+```sql
+select count(m.id) as cnt from Member m
+```
+
+<br>
+
+:point_right: 예시2
+
+```java
+// 엔티티를 파라미터로 전달
+String jpql = "select m from Member m where m = :member";
+List resultList = em.createQuery(jpql)
+                    .setParameter("member", member)
+                    .getResultList();
+```
+
+<br>
+
+```java
+// 식별자를 직접 전달
+String jpql = "select m from Member m where m.id = :memberId";
+List resultList = em.createQuery(jpql)
+                    .setParameter("memberId", memberId)
+                    .getResultList();
+```
+
+위 두 JPQL 모두 아래와 같이 SQL 쿼리를 날린다.
+
+```sql
+select m.* from Member m where m.id=?
+```
+
+<br>
+
+# Named 쿼리 - 정적 쿼리
+```java
+@Entity
+@NamedQuery(
+      name = "Member.findByUsername",
+      query = "select m from Member m where m.username = :username"
+)
+public class Member {
+  ...
+}
+
+// 사용시
+List<Member> resultList = 
+    em.createNamedQuery("Member.findByUsername", Member.class)
+    .setParameter("username", "회원1")
+    .getResultList();
+```
+* 미리 정의해서 이름을 부여해두고 사용하는 JPQL이다.
+* 정적 쿼리만 가능하다.
+* 애노테이션, XML에 정의해서 사용된다.
+  * 항상 XML이 우선권을 가진다.
+* **애플리케이션 로딩 시점에 초기화 후 재사용된다.**
+  * **애플리케이션이 켜질 때 JPQL을 파싱해서 SQL을 캐싱하고 있는다.**
+* **애플리케이션 로딩 시점에 쿼리를 검증한다.**
+  * 애플리케이션 로딩 시점에 컴파일러처럼 정적으로 쿼리를 검증해서 에러를 일찍 찾아낼 수 있다.
+  * 즉, **컴파일 타임에 쿼리 에러를 발견할 수 있다.**
+
+<br>
+
+> Spring-Data-Jpa를 사용하다보면 `@Query`를 사용하는데 이게 바로 NamedQuery이다.
+
+<br>
+
+# 벌크 연산
+* **벌크 연산이란?**
+  * 한 Row가 아닌 여러 Row를 UPDATE하거나 DELETE하는 연산.
+* **벌크 연산이 필요한 이유**
+  * 재고가 10개 미만인 모든 상품의 가격을 10% 상승하려면?
+  * JPA 변경 감지 기능으로 실행하려면 너무 많은 SQL를 실행하게된다.
+    * 변경된 데이터가 100건이라면 100번의 UPDATE SQL을 실행하게 된다... (극혐..)
+* JPA는 벌크보다는 실시간 연산에 더 친화적이지만, 벌크 연산도 지원한다.
+  * `executeUpdate()`
+
+<br>
+
+:point_right: 예시
+
+> 모든 회원의 나이를 20으로 변경해보자.
+
+```java
+String query = "update Member m set m.age = 20";
+int resultCount = em.createQuery(query)
+                    .executeUpdate();
+```
+
+<br>
+
+❗️ **벌크 연산 주의**
+* 벌크 연산은 영속성 컨텍스트를 무시하고 데이터베이스에 직접 쿼리를 날린다.
+* 이로 인해 문제가 발생하는데, 이를 해결하는 방법은 2가지 있다.
+  1. 벌크 연산을 먼저 실행 (벌크 연산만 하고 끝!)
+  2. 벌크 연산을 수행 후 영속성 컨텍스트 초기화 (clear() + flush())
 
