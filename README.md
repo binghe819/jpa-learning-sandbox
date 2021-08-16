@@ -19,3 +19,4 @@
     - [영속성 전이와 고아 객체](https://github.com/binghe819/jpa-learning-sandbox/tree/cascade)
 - 객체지향 쿼리 언어
     - [JPQL](https://github.com/binghe819/jpa-learning-sandbox/tree/query-jpql)
+    - [fetch join](https://github.com/binghe819/jpa-learning-sandbox/tree/query-fetch-join)
