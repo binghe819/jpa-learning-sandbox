@@ -17,6 +17,9 @@
 <br>
 
 - [목차](#목차)
+- [0 JPA 아키텍처](#0-jpa-아키텍처)
+  - [0-1 Class Level Architecture](#0-1-class-level-architecture)
+  - [0-2 JPA Class Relationship](#0-2-jpa-class-relationship)
 - [1 영속성 컨텍스트](#1-영속성-컨텍스트)
   - [1-1 EntityManagerFactory와 EntityManager](#1-1-entitymanagerfactory와-entitymanager)
   - [1-2 영속성 컨텍스트란?](#1-2-영속성-컨텍스트란)
@@ -39,6 +42,42 @@
 
 <br>
 
+# 0 JPA 아키텍처
+> JPA 아키텍처 관련된 자료는 [여기](https://www.tutorialspoint.com/jpa/jpa_architecture.htm)를 참조했다.
+
+<br>
+
+## 0-1 Class Level Architecture
+<p align="center"><img src="./image/jpa_class_level_architecture.png"><br>출처: https://www.tutorialspoint.com/jpa/jpa_architecture.htm</p>
+
+* EntityManagerFactory: EntityManager의 팩토리 클래스. 여러 개의 EntityManager 인스턴스를 생성하고 관리한다.
+  * 애플리케이션 로딩 시점에 DB당 딱 하나만 생성되어야 한다.
+  * 애플리케이션이 종료되는 시점에 닫아줘야한다. (그래야 내부적으로 커넥션 풀에 대한 리소스가 해제된다.)
+* EntityManager: 인터페이스이며, 객체에 대한 영속성 작업을 관리한다. Query 인스턴스의 공장처럼 동작한다.
+  * 실제 Transaction 단위를 수행할 때마다 생성된다.
+  * 즉, 고객의 요청이 올 때마다 사용했다가 닫는다.
+  * Thread간에 공유하면 안된다.
+* Entity: 엔티티는 DB 테이블에 저장되는 영속성 객체다.
+* EntityTransaction: EntityManager와 일대일 관계. 각 EntityManager의 작업들은 EntityTransaction 클래스에 의해 유지된다.
+  * **엔티티 혹은 데이터를 "변경"하는 모든 작업은 반드시 `Transaction` 안에서 이뤄져야한다.**
+  * **단순한 조회의 경우 트랜잭션 안에서 할 필요없다. 이땐 Query를 사용하면 된다.**
+* Persistence: EntityManagerFactory 인스턴스를 얻는 스태틱 메서드를 포함한다.
+* Query: 이 인터페이스는 기준을 충족하는 관계형 객체들을 얻기 위해 JPA 벤더에 의해 구현된다.
+
+<br>
+
+## 0-2 JPA Class Relationship
+아래 그림은 위 클래스들의 관계를 보여준다.
+
+<p align="center"><img src="./image/jpa_class_relationships.png"><br> 출처: https://www.tutorialspoint.com/jpa/jpa_architecture.htm</p>
+
+* EntityManagerFactory와 EntityManager는 1:N 관계이다.
+* EntityManager와 EntityTransaction은 1:1 관계이다. 각 EntityManager의 작업에는 하나의 EntityTransaction 인스턴스가 존재한다.
+* EntityManager와 Query는 1:N 관계이다. 많은 수의 Query를 하나의 EntityManager 인스턴스에서 실행할 수 있다.
+* EntityManager와 Entity는 1:N 관계이다. 하나의 EntityManager는 여러 개의 Entity를 관리할 수 있다.
+
+<br>
+
 # 1 영속성 컨텍스트
 > JPA의 내부 구조를 이해하기 위해선 영속성 컨텍스트의 이해가 필요하다.
 
@@ -58,7 +97,7 @@
 * **EntityManagerFactory는 하나만 생성해서 애플리케이션 전체에서 공유한다.**
   * 애플리케이션 로딩 시점에 딱 하나 (DB당 하나)
 * **EntityManager는 쓰레드간에 공유하면 안된다. (사용하고 버려야 한다.)**
-  * 클라이언트 요청 마다 하나 (DB 요청마다 하나)
+  * 클라이언트 요청 마다 하나
   * **DB 트랜잭션 단위로 생성하고 제거한다.**
 * **JPA의 모든 데이터 변경은 트랜잭션 안에서 실행해야한다.**
 * **엔티티 매니저를 통해서 영속성 컨텍스트에 접근한다.**
