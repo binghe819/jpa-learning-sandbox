@@ -2,12 +2,14 @@ package com.binghe;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.binghe.template.EntityManagerTemplate;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -19,17 +21,17 @@ import org.junit.jupiter.api.Test;
 @DisplayName("플러시 테스트")
 public class FlushTest {
 
+    private EntityManagerTemplate entityManagerTemplate;
+
+    @BeforeEach
+    void setUp() {
+        entityManagerTemplate = new EntityManagerTemplate();
+    }
+
     @DisplayName("플러시의 오해 (직접 호출) - 플러시는 1차 캐시를 지우지 않는다. (영속성 컨텍스트에 쌓아둔 쿼리들을 DB에 날릴뿐)")
     @Test
     void doNotClearCache() {
-        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("test_persistence_config");
-
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
-
-        EntityTransaction tx = entityManager.getTransaction();
-        tx.begin();
-
-        try {
+        entityManagerTemplate.execute(((entityManager, tx) -> {
             // given
             Member member1 = new Member();
             member1.setId(100L);
@@ -53,25 +55,13 @@ public class FlushTest {
 
             System.out.println("================ commit ================");
             tx.commit(); // 이땐 쓰기 SQL 저장소에 아무것도 없으므로 쿼리를 날리지 않는다.
-        } catch (Exception e) {
-            tx.rollback();
-        } finally {
-            entityManager.close();
-        }
-        entityManagerFactory.close();
+        }));
     }
 
     @DisplayName("플러쉬와 트랜잭션 (트랜잭션 호출) - commit 호출시 flush를 호출한 다음에 commit한다.")
     @Test
     void transactionWithFlush() {
-        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("test_persistence_config");
-
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
-
-        EntityTransaction tx = entityManager.getTransaction();
-        tx.begin();
-
-        try {
+        entityManagerTemplate.execute(((entityManager, tx) -> {
             // given
             Member member1 = new Member();
             member1.setId(100L);
@@ -87,25 +77,13 @@ public class FlushTest {
 
             tx.commit();
             System.out.println("================ commit할 때 flush가 먼저 발생하고 commit이 발생한다. ================");
-        } catch (Exception e) {
-            tx.rollback();
-        } finally {
-            entityManager.close();
-        }
-        entityManagerFactory.close();
+        }));
     }
 
     @DisplayName("플러쉬와 JPQL (JPQL 호출) - JPQL 쿼리를 실행하면 그 즉시 flush가 된다.")
     @Test
     void jpql() {
-        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("test_persistence_config");
-
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
-
-        EntityTransaction tx = entityManager.getTransaction();
-        tx.begin();
-
-        try {
+        entityManagerTemplate.execute(((entityManager, tx) -> {
             // given
             Member member1 = new Member();
             member1.setId(100L);
@@ -122,7 +100,7 @@ public class FlushTest {
 
             Query query = entityManager.createQuery("select m from Member as m");
 
-            System.out.println("================ JPQL을 호출하는 순간 1차 캐싱에서 가져오지 않고 flush. ================");
+            System.out.println("================ JPQL을 호출하는 순간 1차 캐싱에서 가져오지 않고 flush하고 조회 쿼리를 통해 가져온다. ================");
 
             List<Member> findMembers = query.getResultList();
             assertThat(findMembers)
@@ -130,12 +108,6 @@ public class FlushTest {
 
             // then
             tx.commit();
-        } catch (Exception e) {
-            System.out.println("Error!!! ");
-            tx.rollback();
-        } finally {
-            entityManager.close();
-        }
-        entityManagerFactory.close();
+        }));
     }
 }

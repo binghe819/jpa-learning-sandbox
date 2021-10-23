@@ -2,15 +2,24 @@ package com.binghe;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.binghe.template.EntityManagerTemplate;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 @DisplayName("영속성 컨텍스트 테스트 (리팩토링 필요)")
 public class PersistenceContextTest {
+
+    private EntityManagerTemplate entityManagerTemplate;
+
+    @BeforeEach
+    void setUp() {
+        entityManagerTemplate = new EntityManagerTemplate();
+    }
 
     @DisplayName("1차 캐싱 - JPA는 1차 캐싱을 통해 동일 트랜잭션 안에서 컬렉션처럼 동작한다.")
     @Test
@@ -50,14 +59,7 @@ public class PersistenceContextTest {
     @DisplayName("동일성 보장 - JPA는 영속성 컨텍스트(정확히는 1차 캐시)를 통해 동일성을 보장한다.")
     @Test
     void identity() {
-        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("test_persistence_config");
-
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
-
-        EntityTransaction tx = entityManager.getTransaction();
-        tx.begin();
-
-        try {
+        entityManagerTemplate.execute(((entityManager, tx) -> {
             // given
             Member member = new Member();
             member.setId(100L); //  AUTOINCREMENT 전략 사용하지 않음
@@ -73,25 +75,13 @@ public class PersistenceContextTest {
             assertThat(findMember1).isSameAs(findMember2);
 
             tx.commit(); // flush + 트랜잭션 commit
-        } catch (Exception e) {
-            tx.rollback();
-        } finally {
-            entityManager.close();
-        }
-        entityManagerFactory.close();
+        }));
     }
 
     @DisplayName("동일성 보장 - JPA는 DB로부터 엔티티를 가져오면 1차 캐싱에 저장하고, 동일성을 보장한다.")
     @Test
     void identityByDB() {
-        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("test_persistence_config");
-
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
-
-        EntityTransaction tx = entityManager.getTransaction();
-        tx.begin();
-
-        try {
+        entityManagerTemplate.execute(((entityManager, tx) -> {
             // given
             Member member = new Member();
             member.setId(100L);
@@ -111,25 +101,13 @@ public class PersistenceContextTest {
             assertThat(findMember1).isSameAs(findMember2);
 
             tx.commit(); // flush + 트랜잭션 commit
-        } catch (Exception e) {
-            tx.rollback();
-        } finally {
-            entityManager.close();
-        }
-        entityManagerFactory.close();
+        }));
     }
 
     @DisplayName("쓰기 지연 SQL 저장소 - JPA는 1차 캐시에 담긴 엔티티를 바로 DB에 저장하지 않고, 쓰기 지연 저장소에 저장하고 flush할 때 한번에 저장한다.")
     @Test
     void sqlStorage() {
-        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("test_persistence_config");
-
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
-
-        EntityTransaction tx = entityManager.getTransaction();
-        tx.begin();
-
-        try {
+        entityManagerTemplate.execute(((entityManager, tx) -> {
             // given
             Member member1 = new Member();
             member1.setId(100L);
@@ -145,27 +123,15 @@ public class PersistenceContextTest {
             // 여기까지 INSERT SQL을 DB에 보내지 않는다.
 
             // 커밋하는 순간 DB에 INSERT SQL을 보낸다.
+            System.out.println("================ 쓰기 지연 SQL 저장소 테스트 - 이제 쿼리 날림 ================");
             tx.commit(); // flush + 트랜잭션 commit
-            System.out.println("================ 쓰기 지연 SQL 저장소 테스트 - 쿼리 날림 ================");
-        } catch (Exception e) {
-            tx.rollback();
-        } finally {
-            entityManager.close();
-        }
-        entityManagerFactory.close();
+        }));
     }
 
     @DisplayName("더티체킹 - JPA는 엔티티 수정시 변경을 감지하여 영속적으로 수정해준다.")
     @Test
     void dirtyChecking() {
-        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("test_persistence_config");
-
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
-
-        EntityTransaction tx = entityManager.getTransaction();
-        tx.begin();
-
-        try {
+        entityManagerTemplate.execute(((entityManager, tx) -> {
             // given - Member를 DB에 저장
             Member member = new Member();
             member.setId(100L);
@@ -179,7 +145,7 @@ public class PersistenceContextTest {
             Member findMember = entityManager.find(Member.class, 100L);
             findMember.setName("update binghe");
 
-            System.out.println("================ UPDATE 쿼리를 날린다. ================");
+            System.out.println("================ 자동으로 UPDATE 쿼리를 날린다. ================");
 
             entityManager.flush();
             entityManager.clear();
@@ -189,25 +155,13 @@ public class PersistenceContextTest {
             assertThat(finalFindMember.getName()).isEqualTo("update binghe");
 
             tx.commit();
-        } catch (Exception e) {
-            tx.rollback();
-        } finally {
-            entityManager.close();
-        }
-        entityManagerFactory.close();
+        }));
     }
 
     @DisplayName("기본 키 전략 - 기본 키 전략을 IDENTITY로 하면 persist할 때 바로 SQL이 날라간다.")
     @Test
     void primarykeyByIdentity() {
-        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("test_persistence_config");
-
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
-
-        EntityTransaction tx = entityManager.getTransaction();
-        tx.begin();
-
-        try {
+        entityManagerTemplate.execute(((entityManager, tx) -> {
             // given
             AutoIncrementMember member = new AutoIncrementMember();
             member.setName("binghe");
@@ -218,13 +172,8 @@ public class PersistenceContextTest {
 
             // then
             assertThat(member.getId()).isNotNull();
-
+            System.out.println("================ 트랜잭션 호출 ================");
             tx.commit(); // flush + 트랜잭션 commit
-        } catch (Exception e) {
-            tx.rollback();
-        } finally {
-            entityManager.close();
-        }
-        entityManagerFactory.close();
+        }));
     }
 }
