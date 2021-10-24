@@ -2,27 +2,25 @@ package com.binghe.one_way;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
-import javax.persistence.Persistence;
+import com.binghe.template.EntityManagerTemplate;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 @DisplayName("N:1 단방향 테스트")
 public class OneWayTest {
 
-    @DisplayName("멤버 N : 1 팀 - 멤버 객체를 가져오면 팀의 정보도 join을 통해 가져온다.")
+    private EntityManagerTemplate entityManagerTemplate;
+
+    @BeforeEach
+    void setUp() {
+        entityManagerTemplate = new EntityManagerTemplate();
+    }
+
+    @DisplayName("멤버 N : 1 팀 - 멤버 객체(N)를 가져오면 팀(1)의 정보도 join을 통해 가져온다. (EAGER인 경우)")
     @Test
     void oneWay() {
-        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("test_persistence_config");
-
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
-
-        EntityTransaction tx = entityManager.getTransaction();
-        tx.begin();
-
-        try {
+        entityManagerTemplate.execute((entityManager, tx) -> {
             // given
             Team team = new Team();
             team.setName("Team A");
@@ -44,12 +42,6 @@ public class OneWayTest {
             assertThat(findTeam.getName()).isEqualTo("Team A");
 
             tx.commit();
-        } catch (Exception e) {
-            System.out.println("Error!!! " + e.getMessage());
-            tx.rollback();
-        } finally {
-            entityManager.close();
-        }
-        entityManagerFactory.close();
+        });
     }
 }
