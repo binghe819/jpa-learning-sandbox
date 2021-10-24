@@ -2,27 +2,28 @@ package com.binghe.one_way;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.binghe.template.EntityManagerTemplate;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 @DisplayName("연관관계 주인 단방향 테스트")
 public class OneWayTest {
 
+    private EntityManagerTemplate entityManagerTemplate;
+
+    @BeforeEach
+    void setUp() {
+        entityManagerTemplate = new EntityManagerTemplate();
+    }
+
     @Test
     void owner() {
-        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("test_persistence_config");
-
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
-
-        EntityTransaction tx = entityManager.getTransaction();
-
-        tx.begin();
-
-        try {
+        entityManagerTemplate.execute(((entityManager, tx) -> {
             // given
             Team team = new Team();
             team.setName("Team A");
@@ -45,12 +46,6 @@ public class OneWayTest {
             assertThat(findTeam.getName()).isEqualTo("Team A");
 
             tx.commit();
-        } catch (Exception e) {
-            System.out.println("Error!!! " + e.getMessage());
-            tx.rollback();
-        } finally {
-            entityManager.close();
-        }
-        entityManagerFactory.close();
+        }));
     }
 }
