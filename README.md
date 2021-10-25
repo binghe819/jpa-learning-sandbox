@@ -3,15 +3,15 @@
 <br>
 
 # 학습테스트 내용
-- [em.find()는 데이터 베이스를 통해서 실제 엔티티 객체를 조회한다. -> 진짜 객체를 주기 위해, 바로 DB  쿼리가 날라간다.](./src/test/java/com/binghe/ProxyTest.java)
-- [em.getReference()는 데이터베이스 조회를 미루는 가짜(프록시) 엔티티 객체를 조회한다. -> 가짜 객체를 반환하고, 해당 객체의 속성이 사용될 때 쿼리가 날라간다.](./src/test/java/com/binghe/ProxyTest.java)
-- [m.getReference()를 통해 가져온 프록시(가짜) 객체는 처음 사용할 때만 영속성 컨텍스트에 초기화 요청을 한다.](./src/test/java/com/binghe/ProxyTest.java)
-- [프록시 객체를 초기화할 때, 프록시 객체가 실제 엔티티로 바뀌는 것이 아니다. 초기화되면 프록시 객체를 통해서 실제 엔티티에 접근하는 것.](./src/test/java/com/binghe/ProxyTest.java)
-- [프록시 객체는 원본 엔티티를 상속받음, 따라서 타입 체크시 주의해야한다. -> == 비교는 실패한다. 대신 instanceOf를 사용한다.](./src/test/java/com/binghe/ProxyTest.java)
-- [프록시 객체는 원본 엔티티를 상속받음, 따라서 타입 체크시 주의해야한다. -> 만약 프록시 객체를 먼저 찾아서 캐싱되어있다면, 이후 같은 id에 대한 find는 프록시 객체를 가져오게 된다.](./src/test/java/com/binghe/ProxyTest.java)
-- [영속성 컨텍스트에 찾는 엔티티가 이미 있으면 getReference를 호출해도 실제 엔티티를 반환한다.](./src/test/java/com/binghe/ProxyTest.java)
-- [JPA는 한 트랜잭션 내에서 READ REFEATABLE을 기본으로 사용하기 때문에, 같은 트랜잭션 안에선 == 비교가 true가 나와야한다. -> 그러므로 프록시 객체도 동일하게 캐시된다.](./src/test/java/com/binghe/ProxyTest.java)
-- [영속성 컨텍스트의 도움을 받을 수 없는 준영속 상태일 때, 프록시를 초기화하면 문제가 발생한다. -> LazyInitializationException](./src/test/java/com/binghe/ProxyTest.java)
+- [프록시 테스트](./src/test/java/com/binghe/ProxyTest.java)
+  - `em.find()`는 실제 엔티티 객체를 생성하고, `em.getReference()`는 프록시 객체를 생성한다.
+  - 프록시 객체는 해당 객체의 속성이 사용될 때 비로서 쿼리를 날려 Target 객체를 가져온다.
+  - 프록시 객체를 초기화할 때, 프록시 객체가 실제 엔티티로 바뀌는 것이 아니다. 초기화되면 프록시 객체를 통해서 실제 엔티티에 접근하는 것. (프록시 패턴)
+  - getReference의 경우는 타입에 대한 == 비교가 불가능하다. instanceOf를 사용해야 함.
+  - getReference를 통해 생성되는 프록시의 클래스 정보는 동일하다 (ByteBuddy를 통해 생성함)
+  - 영속성 컨텍스트에 프록시 객체가 이미 있다면, 같은 id에 대한 find의 결과는 저장된 프록시 객체를 가져온다. (물론 쿼리를 통해 Target 객체도 가져온다.)
+  - 영속성 컨텍스트에 찾는 엔티티가 이미 있으면 getReference를 호출해도 실제 엔티티를 반환한다.
+  - 영속성 컨텍스트의 도움을 받을 수 없는 준영속 상태일 때, 프록시를 초기화하면 문제가 발생한다. -> LazyInitializationException
 
 <br>
 

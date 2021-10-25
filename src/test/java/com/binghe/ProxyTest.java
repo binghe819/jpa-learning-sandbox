@@ -169,6 +169,16 @@ public class ProxyTest {
             assertThat(pm1.getClass()).isNotSameAs(pm2.getClass()); // 상속으로 인해 타입이 같지 않다.
             assertThat(pm1).isNotSameAs(pm2);
 
+            flushAndClear(entityManager);
+
+            // then
+            // getReference를 통해 생성되는 프록시의 클래스 정보는 동일하다 (ByteBuddy를 통해 생성함)
+            Member pm1_ = entityManager.getReference(Member.class, member1.getId());
+            Member pm2_ = entityManager.getReference(Member.class, member2.getId());
+
+            assertThat(pm1_.getClass()).isSameAs(pm2_.getClass());
+            assertThat(pm1_).isNotSameAs(pm2_);
+
             tx.commit();
         }));
     }
