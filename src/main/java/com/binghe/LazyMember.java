@@ -8,17 +8,17 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class Member {
+public class LazyMember {
 
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue
     private Long id;
 
     private String name;
 
-//    @ManyToOne(fetch = FetchType.LAZY)
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "TEAM_ID")
-    private Team team;
+    private LazyTeam team;
 
     public Long getId() {
         return id;
@@ -36,11 +36,11 @@ public class Member {
         this.name = name;
     }
 
-    public Team getTeam() {
+    public LazyTeam getTeam() {
         return team;
     }
 
-    public void setTeam(Team team) {
+    public void setTeam(LazyTeam team) {
         this.team = team;
     }
 }
