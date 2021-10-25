@@ -2,27 +2,29 @@ package com.binghe;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.binghe.template.EntityManagerTemplate;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 @DisplayName("고아 객체 테스트")
 public class OrphanTest {
 
+    private EntityManagerTemplate entityManagerTemplate;
+
+    @BeforeEach
+    void setUp() {
+        entityManagerTemplate = new EntityManagerTemplate();
+    }
+
     @DisplayName("자식 엔티티를 컬렉션에서 제거하면 쿼리가 날라간다. (연관관계 주인이 아닌대로 쿼리를 날릴 수 있다.)")
     @Test
     void orphanTest() {
-        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("test_persistence_config");
-
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
-
-        EntityTransaction tx = entityManager.getTransaction();
-        tx.begin();
-
-        try {
+        entityManagerTemplate.execute(((entityManager, tx) -> {
             // given
             Child child1 = new Child();
             Child child2 = new Child();
@@ -49,12 +51,6 @@ public class OrphanTest {
             assertThat(resultParent.getChilds().size()).isEqualTo(1);
 
             tx.commit();
-        } catch (Exception e) {
-            System.out.println("Error!! -> " + e);
-            tx.rollback();
-        } finally {
-            entityManager.close();
-        }
-        entityManagerFactory.close();
+        }));
     }
 }
