@@ -1,22 +1,24 @@
-# JPA 놀이터
+# JPA 놀이터 - @MappedSuperClass
 
 <br>
 
-## 주제
-- [JPA 소개](./docs/README.md)
-- [영속성 컨텍스트](https://github.com/binghe819/jpa-learning-sandbox/tree/persistence-context)
-- 연관관계 매핑
-    - [연관관계 주인](https://github.com/binghe819/jpa-learning-sandbox/tree/relation-mapping-owner-of-relationship)
-    - [N : 1](https://github.com/binghe819/jpa-learning-sandbox/tree/relation-mapping-N-1)
-    - [1 : N](https://github.com/binghe819/jpa-learning-sandbox/tree/relation-mapping-1-N)
-    - [1 : 1](https://github.com/binghe819/jpa-learning-sandbox/tree/relation-mapping-1-1)
-    - [N : N](https://github.com/binghe819/jpa-learning-sandbox/tree/relation-mapping-N-N)
-    - [상속관계 매핑](https://github.com/binghe819/jpa-learning-sandbox/tree/relation-mapping-abstract)
-    - [@MappedSuperClass](https://github.com/binghe819/jpa-learning-sandbox/tree/relation-mapping-mappedsuperclass)
-- 프록시와 연관관계 관리
-    - [프록시](https://github.com/binghe819/jpa-learning-sandbox/tree/proxy)
-    - [지연 로딩과 즉시 로딩](https://github.com/binghe819/jpa-learning-sandbox/tree/proxy-lazy-and-eager)
-    - [영속성 전이와 고아 객체](https://github.com/binghe819/jpa-learning-sandbox/tree/cascade)
-- 객체지향 쿼리 언어
-    - [JPQL](https://github.com/binghe819/jpa-learning-sandbox/tree/query-jpql)
-    - [fetch join](https://github.com/binghe819/jpa-learning-sandbox/tree/query-fetch-join)
+# 학습테스트 내용
+
+<br>
+
+# @MappedSuperclass
+> 상속관계랑 별로 상관없다.
+
+<p align="center"><img src="./image/MappedSuperclass.png"><br>출처: 자바 ORM 표준 JPA 프로그래밍</p>
+
+* **MappedSuperClass란?**
+  * **테이블과 관계 없고, 단순히 엔티티가 공통으로 사용하는 매핑 정보를 모으는 역할.**
+  * 주로 등록일, 수정일, 등록자, 수정자 같은 전체 엔티티에서 공통으로 적용하는 정보를 모을 때 사용된다.
+* **JPA에서의 상속**
+  * **엔티티 클래스는 `@Entity`나 `@MappedSuperclass`로 지정한 클래스만 상속가능하다.**
+* **주의할 점**
+  * `@MappedSuperclass`는 상속관계 매핑이 아니다!
+  * `@MappedSuperclass`는 엔티티도 아니고, 테이블과 매핑도 안된다. (테이블도 없음)
+  * 조회, 검삭 불가 (`em.find(BaseEntity.class, ...)` 불가)
+  * 직접 생성해서 사용할 일이 없으므로 추상 클래스를 권장한다.
+  
