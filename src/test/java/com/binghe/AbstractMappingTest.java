@@ -2,27 +2,25 @@ package com.binghe;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
-import javax.persistence.Persistence;
+import com.binghe.template.EntityManagerTemplate;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 @DisplayName("상속관계 매핑 테스트")
 public class AbstractMappingTest {
 
+    private EntityManagerTemplate entityManagerTemplate;
+
+    @BeforeEach
+    void setUp() {
+        entityManagerTemplate = new EntityManagerTemplate();
+    }
+
     @DisplayName("테이블이 어떻게 생성되나 확인하는 테스트")
     @Test
     void table() {
-        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("test_persistence_config");
-
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
-
-        EntityTransaction tx = entityManager.getTransaction();
-        tx.begin();
-
-        try {
+        entityManagerTemplate.execute((entityManager, tx) -> {
 
             Movie movie = new Movie();
             movie.setDirector("A");
@@ -42,12 +40,6 @@ public class AbstractMappingTest {
             assertThat(findMovie.getPrice()).isEqualTo(10_000);
 
             tx.commit();
-        } catch (Exception e) {
-            System.out.println("Error!!! " + e);
-            tx.rollback();
-        } finally {
-            entityManager.close();
-        }
-        entityManagerFactory.close();
+        });
     }
 }
