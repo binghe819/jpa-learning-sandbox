@@ -74,6 +74,11 @@ public class LazyTest {
             List<LazyMember> members = entityManager.createQuery("select m from LazyMember m", LazyMember.class)
                 .getResultList();
 
+            members.forEach(it -> {
+                System.out.println("조회할 때만 날아간다.");
+                System.out.println(it.getTeam().getName());
+            });
+
             // then
             assertThat(members).hasSize(2);
         }));
