@@ -57,7 +57,7 @@ public class TwoWayTest {
         }));
     }
 
-    @DisplayName("연관관계 주인이 아닌 경우 외래 키 테이블을 관리할 수 없다.")
+    @DisplayName("연관관계 주인이 아닌 경우 외래 키 테이블을 관리할 수 없다. - 연관관계 주인이 아닌 객체에서의 변경은 테이블에 반영되지 않는다.")
     @Test
     void notOwnerOfRelationship() {
         entityManagerTemplate.execute((entityManager, tx) -> {

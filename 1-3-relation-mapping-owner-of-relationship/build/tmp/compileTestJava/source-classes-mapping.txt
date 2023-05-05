@@ -1,4 +1,4 @@
-com/binghe/EagerTest.java
- com.binghe.EagerTest
-com/binghe/LazyTest.java
- com.binghe.LazyTest
+com/binghe/one_way/OneWayTest.java
+ com.binghe.one_way.OneWayTest
+com/binghe/two_way/TwoWayTest.java
+ com.binghe.two_way.TwoWayTest

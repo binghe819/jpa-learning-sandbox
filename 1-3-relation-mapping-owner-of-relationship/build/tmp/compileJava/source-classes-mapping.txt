@@ -1,16 +1,12 @@
-com/binghe/LazyMember.java
- com.binghe.LazyMember
-com/binghe/EagerMember.java
- com.binghe.EagerMember
-com/binghe/EagerTeam.java
- com.binghe.EagerTeam
+com/binghe/one_way/Member.java
+ com.binghe.one_way.Member
+com/binghe/one_way/Team.java
+ com.binghe.one_way.Team
+com/binghe/two_way/Team.java
+ com.binghe.two_way.Team
 com/binghe/template/BusinessExecutor.java
  com.binghe.template.BusinessExecutor
 com/binghe/template/EntityManagerTemplate.java
  com.binghe.template.EntityManagerTemplate
-com/binghe/LazyTeam.java
- com.binghe.LazyTeam
-com/binghe/Team.java
- com.binghe.Team
-com/binghe/Member.java
- com.binghe.Member
+com/binghe/two_way/Member.java
+ com.binghe.two_way.Member

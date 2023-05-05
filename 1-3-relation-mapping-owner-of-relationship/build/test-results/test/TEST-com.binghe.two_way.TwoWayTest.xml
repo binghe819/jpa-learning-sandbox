@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="연관관계 주인 양방향 테스트" tests="2" skipped="0" failures="0" errors="0" timestamp="2023-05-05T11:45:57" hostname="MacBook-Pro-52.local" time="0.982">
+  <properties/>
+  <testcase name="연관관계 주인이 외래 키를 가진 테이블을 관리한다. (등록, 수정)" classname="com.binghe.two_way.TwoWayTest" time="0.885"/>
+  <testcase name="연관관계 주인이 아닌 경우 외래 키 테이블을 관리할 수 없다. - 연관관계 주인이 아닌 객체에서의 변경은 테이블에 반영되지 않는다." classname="com.binghe.two_way.TwoWayTest" time="0.096"/>
+  <system-out><![CDATA[Hibernate: 
+    
+    drop table Member if exists
+Hibernate: 
+    
+    drop table Team if exists
+Hibernate: 
+    
+    drop sequence if exists hibernate_sequence
+Hibernate: create sequence hibernate_sequence start with 1 increment by 1
+Hibernate: 
+    
+    create table Member (
+       MEMBER_ID bigint not null,
+        NAME varchar(255) not null,
+        TEAM_ID bigint,
+        primary key (MEMBER_ID)
+    )
+Hibernate: 
+    
+    create table Team (
+       TEAM_ID bigint not null,
+        NAME varchar(255) not null,
+        primary key (TEAM_ID)
+    )
+Hibernate: 
+    
+    alter table Member 
+       add constraint FKl7wsny760hjy6x19kqnduasbm 
+       foreign key (TEAM_ID) 
+       references Team
+Hibernate: 
+    call next value for hibernate_sequence
+Hibernate: 
+    call next value for hibernate_sequence
+Hibernate: 
+    /* insert com.binghe.two_way.Team
+        */ insert 
+        into
+            Team
+            (NAME, TEAM_ID) 
+        values
+            (?, ?)
+Hibernate: 
+    /* insert com.binghe.two_way.Member
+        */ insert 
+        into
+            Member
+            (NAME, TEAM_ID, MEMBER_ID) 
+        values
+            (?, ?, ?)
+Hibernate: 
+    call next value for hibernate_sequence
+Hibernate: 
+    /* insert com.binghe.two_way.Member
+        */ insert 
+        into
+            Member
+            (NAME, TEAM_ID, MEMBER_ID) 
+        values
+            (?, ?, ?)
+Hibernate: 
+    select
+        member0_.MEMBER_ID as MEMBER_I1_0_0_,
+        member0_.NAME as NAME2_0_0_,
+        member0_.TEAM_ID as TEAM_ID3_0_0_,
+        team1_.TEAM_ID as TEAM_ID1_1_1_,
+        team1_.NAME as NAME2_1_1_ 
+    from
+        Member member0_ 
+    left outer join
+        Team team1_ 
+            on member0_.TEAM_ID=team1_.TEAM_ID 
+    where
+        member0_.MEMBER_ID=?
+Hibernate: 
+    select
+        members0_.TEAM_ID as TEAM_ID3_0_0_,
+        members0_.MEMBER_ID as MEMBER_I1_0_0_,
+        members0_.MEMBER_ID as MEMBER_I1_0_1_,
+        members0_.NAME as NAME2_0_1_,
+        members0_.TEAM_ID as TEAM_ID3_0_1_ 
+    from
+        Member members0_ 
+    where
+        members0_.TEAM_ID=?
+Hibernate: 
+    
+    drop table Member if exists
+Hibernate: 
+    
+    drop table Team if exists
+Hibernate: 
+    
+    drop sequence if exists hibernate_sequence
+Hibernate: create sequence hibernate_sequence start with 1 increment by 1
+Hibernate: 
+    
+    create table Member (
+       MEMBER_ID bigint not null,
+        NAME varchar(255) not null,
+        TEAM_ID bigint,
+        primary key (MEMBER_ID)
+    )
+Hibernate: 
+    
+    create table Team (
+       TEAM_ID bigint not null,
+        NAME varchar(255) not null,
+        primary key (TEAM_ID)
+    )
+Hibernate: 
+    
+    alter table Member 
+       add constraint FKl7wsny760hjy6x19kqnduasbm 
+       foreign key (TEAM_ID) 
+       references Team
+Hibernate: 
+    call next value for hibernate_sequence
+Hibernate: 
+    call next value for hibernate_sequence
+Hibernate: 
+    /* insert com.binghe.two_way.Team
+        */ insert 
+        into
+            Team
+            (NAME, TEAM_ID) 
+        values
+            (?, ?)
+Hibernate: 
+    /* insert com.binghe.two_way.Member
+        */ insert 
+        into
+            Member
+            (NAME, TEAM_ID, MEMBER_ID) 
+        values
+            (?, ?, ?)
+Hibernate: 
+    select
+        member0_.MEMBER_ID as MEMBER_I1_0_0_,
+        member0_.NAME as NAME2_0_0_,
+        member0_.TEAM_ID as TEAM_ID3_0_0_,
+        team1_.TEAM_ID as TEAM_ID1_1_1_,
+        team1_.NAME as NAME2_1_1_ 
+    from
+        Member member0_ 
+    left outer join
+        Team team1_ 
+            on member0_.TEAM_ID=team1_.TEAM_ID 
+    where
+        member0_.MEMBER_ID=?
+Hibernate: 
+    select
+        member0_.MEMBER_ID as MEMBER_I1_0_0_,
+        member0_.NAME as NAME2_0_0_,
+        member0_.TEAM_ID as TEAM_ID3_0_0_,
+        team1_.TEAM_ID as TEAM_ID1_1_1_,
+        team1_.NAME as NAME2_1_1_ 
+    from
+        Member member0_ 
+    left outer join
+        Team team1_ 
+            on member0_.TEAM_ID=team1_.TEAM_ID 
+    where
+        member0_.MEMBER_ID=?
+Hibernate: 
+    select
+        members0_.TEAM_ID as TEAM_ID3_0_0_,
+        members0_.MEMBER_ID as MEMBER_I1_0_0_,
+        members0_.MEMBER_ID as MEMBER_I1_0_1_,
+        members0_.NAME as NAME2_0_1_,
+        members0_.TEAM_ID as TEAM_ID3_0_1_ 
+    from
+        Member members0_ 
+    where
+        members0_.TEAM_ID=?
+]]></system-out>
+  <system-err><![CDATA[5월 05, 2023 8:45:57 오후 org.hibernate.jpa.internal.util.LogHelper logPersistenceUnitInformation
+INFO: HHH000204: Processing PersistenceUnitInfo [
+	name: test_persistence_config
+	...]
+5월 05, 2023 8:45:57 오후 org.hibernate.Version logVersion
+INFO: HHH000412: Hibernate Core {5.3.10.Final}
+5월 05, 2023 8:45:57 오후 org.hibernate.cfg.Environment <clinit>
+INFO: HHH000206: hibernate.properties not found
+5월 05, 2023 8:45:57 오후 org.hibernate.annotations.common.reflection.java.JavaReflectionManager <clinit>
+INFO: HCANN000001: Hibernate Commons Annotations {5.0.4.Final}
+5월 05, 2023 8:45:58 오후 org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl configure
+WARN: HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+5월 05, 2023 8:45:58 오후 org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl buildCreator
+INFO: HHH10001005: using driver [org.h2.Driver] at URL [jdbc:h2:tcp://localhost/~/jpa;MODE=LEGACY]
+5월 05, 2023 8:45:58 오후 org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl buildCreator
+INFO: HHH10001001: Connection properties: {user=sa}
+5월 05, 2023 8:45:58 오후 org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl buildCreator
+INFO: HHH10001003: Autocommit mode: false
+5월 05, 2023 8:45:58 오후 org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl$PooledConnections <init>
+INFO: HHH000115: Hibernate connection pool size: 20 (min=1)
+5월 05, 2023 8:45:58 오후 org.hibernate.dialect.Dialect <init>
+INFO: HHH000400: Using dialect: org.hibernate.dialect.H2Dialect
+5월 05, 2023 8:45:58 오후 org.hibernate.resource.transaction.backend.jdbc.internal.DdlTransactionIsolatorNonJtaImpl getIsolatedConnection
+INFO: HHH10001501: Connection obtained from JdbcConnectionAccess [org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess@3823353c] for (non-JTA) DDL execution was not in auto-commit mode; the Connection 'local transaction' will be committed and the Connection will be set into auto-commit mode.
+5월 05, 2023 8:45:58 오후 org.hibernate.resource.transaction.backend.jdbc.internal.DdlTransactionIsolatorNonJtaImpl getIsolatedConnection
+INFO: HHH10001501: Connection obtained from JdbcConnectionAccess [org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess@1bfe54f7] for (non-JTA) DDL execution was not in auto-commit mode; the Connection 'local transaction' will be committed and the Connection will be set into auto-commit mode.
+5월 05, 2023 8:45:58 오후 org.hibernate.tool.schema.internal.SchemaCreatorImpl applyImportSources
+INFO: HHH000476: Executing import script 'org.hibernate.tool.schema.internal.exec.ScriptSourceInputNonExistentImpl@67cf19a7'
+5월 05, 2023 8:45:58 오후 org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl stop
+INFO: HHH10001008: Cleaning up connection pool [jdbc:h2:tcp://localhost/~/jpa;MODE=LEGACY]
+5월 05, 2023 8:45:58 오후 org.hibernate.jpa.internal.util.LogHelper logPersistenceUnitInformation
+INFO: HHH000204: Processing PersistenceUnitInfo [
+	name: test_persistence_config
+	...]
+5월 05, 2023 8:45:58 오후 org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl configure
+WARN: HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+5월 05, 2023 8:45:58 오후 org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl buildCreator
+INFO: HHH10001005: using driver [org.h2.Driver] at URL [jdbc:h2:tcp://localhost/~/jpa;MODE=LEGACY]
+5월 05, 2023 8:45:58 오후 org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl buildCreator
+INFO: HHH10001001: Connection properties: {user=sa}
+5월 05, 2023 8:45:58 오후 org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl buildCreator
+INFO: HHH10001003: Autocommit mode: false
+5월 05, 2023 8:45:58 오후 org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl$PooledConnections <init>
+INFO: HHH000115: Hibernate connection pool size: 20 (min=1)
+5월 05, 2023 8:45:58 오후 org.hibernate.dialect.Dialect <init>
+INFO: HHH000400: Using dialect: org.hibernate.dialect.H2Dialect
+5월 05, 2023 8:45:58 오후 org.hibernate.resource.transaction.backend.jdbc.internal.DdlTransactionIsolatorNonJtaImpl getIsolatedConnection
+INFO: HHH10001501: Connection obtained from JdbcConnectionAccess [org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess@7bf40a1e] for (non-JTA) DDL execution was not in auto-commit mode; the Connection 'local transaction' will be committed and the Connection will be set into auto-commit mode.
+5월 05, 2023 8:45:58 오후 org.hibernate.resource.transaction.backend.jdbc.internal.DdlTransactionIsolatorNonJtaImpl getIsolatedConnection
+INFO: HHH10001501: Connection obtained from JdbcConnectionAccess [org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess@2f00fad3] for (non-JTA) DDL execution was not in auto-commit mode; the Connection 'local transaction' will be committed and the Connection will be set into auto-commit mode.
+5월 05, 2023 8:45:58 오후 org.hibernate.tool.schema.internal.SchemaCreatorImpl applyImportSources
+INFO: HHH000476: Executing import script 'org.hibernate.tool.schema.internal.exec.ScriptSourceInputNonExistentImpl@67cf19a7'
+5월 05, 2023 8:45:58 오후 org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl stop
+INFO: HHH10001008: Cleaning up connection pool [jdbc:h2:tcp://localhost/~/jpa;MODE=LEGACY]
+]]></system-err>
+</testsuite>
