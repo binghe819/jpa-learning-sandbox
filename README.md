@@ -3,7 +3,7 @@
 <br>
 
 ## 주제
-- [JPA 소개](./docs/README.md)
+- [JPA 소개](1-1-introduce-jpa/README.md)
 - [영속성 컨텍스트](https://github.com/binghe819/jpa-learning-sandbox/tree/persistence-context)
 - 연관관계 매핑
     - [연관관계 주인](https://github.com/binghe819/jpa-learning-sandbox/tree/relation-mapping-owner-of-relationship)

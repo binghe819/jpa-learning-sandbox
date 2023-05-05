@@ -91,7 +91,7 @@ class Team {
 ## 2-1 상속
 객체는 상속이라는 기능을 가지고 있지만 테이블은 상속이라는 기능이 없다.
 
-<p align="center"><img src="./image/abstract.png" width="400"><br>출처: 자바 ORM 표준 JPA 프로그래밍</p>
+<p align="center"><img src="image/abstract.png" width="400"><br>출처: 자바 ORM 표준 JPA 프로그래밍</p>
 
 * **패러다임의 불일치를 해결하려고 소모하는 비용이 크다. (개발자 야근..)**
     * 저장
@@ -108,7 +108,7 @@ class Team {
 
 <br>
 
-<p align="center"><img src="./image/relation.png" width="300"><br>출처: 자바 ORM 표준 JPA 프로그래밍</p>
+<p align="center"><img src="image/relation.png" width="300"><br>출처: 자바 ORM 표준 JPA 프로그래밍</p>
 
 * **객체와 테이블의 연관관계**
     * 객체는 참조를 사용해 다른 객체와 연관관계를 가지고, 참조에 접근해서 연관된 객체를 조회한다.
@@ -234,16 +234,16 @@ member1 == member2; // true
 
 🤔 **JPA는 어떻게 동작하는가?**
 
-<p align="center"><img src="./image/jpa_and_jdbc.png" width="500"><br>출처: 자바 ORM 표준 JPA 프로그래밍</p>
+<p align="center"><img src="image/jpa_and_jdbc.png" width="500"><br>출처: 자바 ORM 표준 JPA 프로그래밍</p>
 
 * JPA가 마법을 부리는 것이 아니다. 똑같이 JDBC를 사용해서 동작한다.
     * 다만, 객체만 구현하면 자동적으로 SQL코드와 JDBC코드를 만들어준다.
 
 <br>
 
-<p align="center"><img src="./image/jpa_save.png" width="500"><br>출처: 자바 ORM 표준 JPA 프로그래밍</p>
+<p align="center"><img src="image/jpa_save.png" width="500"><br>출처: 자바 ORM 표준 JPA 프로그래밍</p>
 
-<p align="center"><img src="./image/jpa_select.png" width="500"><br>출처: 자바 ORM 표준 JPA 프로그래밍</p>
+<p align="center"><img src="image/jpa_select.png" width="500"><br>출처: 자바 ORM 표준 JPA 프로그래밍</p>
 
 <br>
 
@@ -324,7 +324,7 @@ tranaction.commit(); // 커밋
 
 **4. 지연 로딩과 즉시 로딩**
 
-<p align="center"><img src="./image/lazy.png" width="500"><br>출처: 자바 ORM 표준 JPA 프로그래밍</p>
+<p align="center"><img src="image/lazy.png" width="500"><br>출처: 자바 ORM 표준 JPA 프로그래밍</p>
 
 * 지연 로딩과 즉시 로딩은 설정을 통해 선택할 수 있다.
 
