@@ -158,7 +158,7 @@ public class PersistenceContextTest {
         }));
     }
 
-    @DisplayName("기본 키 전략 - 기본 키 전략을 IDENTITY로 하면 persist할 때 바로 SQL이 날라간다.")
+    @DisplayName("기본 키 전략 - 기본 키 전략을 IDENTITY로 하면 persist할 때 바로 SQL이 날라간다. (중요)")
     @Test
     void primarykeyByIdentity() {
         entityManagerTemplate.execute(((entityManager, tx) -> {
@@ -167,7 +167,7 @@ public class PersistenceContextTest {
             member.setName("binghe");
 
             // when
-            entityManager.persist(member); // id값을 얻기위해 insert 쿼리를 바로 날린다.
+            entityManager.persist(member); // id값을 얻기위해 insert 쿼리를 바로 날린다. -> IDENTITY 전략이기때문.
             System.out.println("================ IDENTITY 전략 테스트 - 트랜잭션 전에 쿼리 이미 날림. ================");
 
             // then

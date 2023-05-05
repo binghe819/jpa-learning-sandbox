@@ -1,0 +1,8 @@
+com/binghe/template/BusinessExecutor.java
+ com.binghe.template.BusinessExecutor
+com/binghe/template/EntityManagerTemplate.java
+ com.binghe.template.EntityManagerTemplate
+com/binghe/AutoIncrementMember.java
+ com.binghe.AutoIncrementMember
+com/binghe/Member.java
+ com.binghe.Member

@@ -1,0 +1,6 @@
+com/binghe/FlushTest.java
+ com.binghe.FlushTest
+com/binghe/EntityLifeCycleTest.java
+ com.binghe.EntityLifeCycleTest
+com/binghe/PersistenceContextTest.java
+ com.binghe.PersistenceContextTest
