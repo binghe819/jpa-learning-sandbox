@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="지연 로딩 테스트" tests="1" skipped="0" failures="0" errors="0" timestamp="2022-10-27T00:42:44" hostname="MacBook-Pro-52.local" time="0.901">
+  <properties/>
+  <testcase name="지연 로딩도 N + 1가 발생하지만, 호출될 때 쿼리가 날라간다. (List&lt;Member&gt;만 가져오고 싶을 때 유용)" classname="com.binghe.LazyTest" time="0.901"/>
+  <system-out><![CDATA[Hibernate: 
+    
+    drop table EagerMember if exists
+Hibernate: 
+    
+    drop table EagerTeam if exists
+Hibernate: 
+    
+    drop table LazyMember if exists
+Hibernate: 
+    
+    drop table LazyTeam if exists
+Hibernate: 
+    
+    drop sequence if exists hibernate_sequence
+Hibernate: create sequence hibernate_sequence start with 1 increment by 1
+Hibernate: 
+    
+    create table EagerMember (
+       id bigint not null,
+        name varchar(255),
+        TEAM_ID bigint,
+        primary key (id)
+    )
+Hibernate: 
+    
+    create table EagerTeam (
+       id bigint not null,
+        name varchar(255),
+        primary key (id)
+    )
+Hibernate: 
+    
+    create table LazyMember (
+       id bigint not null,
+        name varchar(255),
+        TEAM_ID bigint,
+        primary key (id)
+    )
+Hibernate: 
+    
+    create table LazyTeam (
+       id bigint not null,
+        name varchar(255),
+        primary key (id)
+    )
+Hibernate: 
+    
+    alter table EagerMember 
+       add constraint FK42avbaj3icx3kusod6pn36yxx 
+       foreign key (TEAM_ID) 
+       references EagerTeam
+Hibernate: 
+    
+    alter table LazyMember 
+       add constraint FKtncr08y1h3tj6dsbtg0d35rry 
+       foreign key (TEAM_ID) 
+       references LazyTeam
+Hibernate: 
+    call next value for hibernate_sequence
+Hibernate: 
+    call next value for hibernate_sequence
+Hibernate: 
+    call next value for hibernate_sequence
+Hibernate: 
+    call next value for hibernate_sequence
+Hibernate: 
+    /* insert com.binghe.LazyTeam
+        */ insert 
+        into
+            LazyTeam
+            (name, id) 
+        values
+            (?, ?)
+Hibernate: 
+    /* insert com.binghe.LazyMember
+        */ insert 
+        into
+            LazyMember
+            (name, TEAM_ID, id) 
+        values
+            (?, ?, ?)
+Hibernate: 
+    /* insert com.binghe.LazyTeam
+        */ insert 
+        into
+            LazyTeam
+            (name, id) 
+        values
+            (?, ?)
+Hibernate: 
+    /* insert com.binghe.LazyMember
+        */ insert 
+        into
+            LazyMember
+            (name, TEAM_ID, id) 
+        values
+            (?, ?, ?)
+===============쿼리가 한 번만 날라간다.===============
+Hibernate: 
+    /* select
+        m 
+    from
+        LazyMember m */ select
+            lazymember0_.id as id1_2_,
+            lazymember0_.name as name2_2_,
+            lazymember0_.TEAM_ID as TEAM_ID3_2_ 
+        from
+            LazyMember lazymember0_
+조회할 때만 날아간다.
+Hibernate: 
+    select
+        lazyteam0_.id as id1_3_0_,
+        lazyteam0_.name as name2_3_0_ 
+    from
+        LazyTeam lazyteam0_ 
+    where
+        lazyteam0_.id=?
+Team A
+조회할 때만 날아간다.
+Hibernate: 
+    select
+        lazyteam0_.id as id1_3_0_,
+        lazyteam0_.name as name2_3_0_ 
+    from
+        LazyTeam lazyteam0_ 
+    where
+        lazyteam0_.id=?
+Team B
+]]></system-out>
+  <system-err><![CDATA[10월 27, 2022 9:42:44 오전 org.hibernate.jpa.internal.util.LogHelper logPersistenceUnitInformation
+INFO: HHH000204: Processing PersistenceUnitInfo [
+	name: test_persistence_config
+	...]
+10월 27, 2022 9:42:44 오전 org.hibernate.Version logVersion
+INFO: HHH000412: Hibernate Core {5.3.10.Final}
+10월 27, 2022 9:42:44 오전 org.hibernate.cfg.Environment <clinit>
+INFO: HHH000206: hibernate.properties not found
+10월 27, 2022 9:42:44 오전 org.hibernate.annotations.common.reflection.java.JavaReflectionManager <clinit>
+INFO: HCANN000001: Hibernate Commons Annotations {5.0.4.Final}
+10월 27, 2022 9:42:44 오전 org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl configure
+WARN: HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+10월 27, 2022 9:42:44 오전 org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl buildCreator
+INFO: HHH10001005: using driver [org.h2.Driver] at URL [jdbc:h2:tcp://localhost/~/jpa]
+10월 27, 2022 9:42:44 오전 org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl buildCreator
+INFO: HHH10001001: Connection properties: {user=sa}
+10월 27, 2022 9:42:44 오전 org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl buildCreator
+INFO: HHH10001003: Autocommit mode: false
+10월 27, 2022 9:42:44 오전 org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl$PooledConnections <init>
+INFO: HHH000115: Hibernate connection pool size: 20 (min=1)
+10월 27, 2022 9:42:44 오전 org.hibernate.dialect.Dialect <init>
+INFO: HHH000400: Using dialect: org.hibernate.dialect.H2Dialect
+10월 27, 2022 9:42:45 오전 org.hibernate.resource.transaction.backend.jdbc.internal.DdlTransactionIsolatorNonJtaImpl getIsolatedConnection
+INFO: HHH10001501: Connection obtained from JdbcConnectionAccess [org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess@4e4bbf5e] for (non-JTA) DDL execution was not in auto-commit mode; the Connection 'local transaction' will be committed and the Connection will be set into auto-commit mode.
+10월 27, 2022 9:42:45 오전 org.hibernate.resource.transaction.backend.jdbc.internal.DdlTransactionIsolatorNonJtaImpl getIsolatedConnection
+INFO: HHH10001501: Connection obtained from JdbcConnectionAccess [org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess@44b000f7] for (non-JTA) DDL execution was not in auto-commit mode; the Connection 'local transaction' will be committed and the Connection will be set into auto-commit mode.
+10월 27, 2022 9:42:45 오전 org.hibernate.tool.schema.internal.SchemaCreatorImpl applyImportSources
+INFO: HHH000476: Executing import script 'org.hibernate.tool.schema.internal.exec.ScriptSourceInputNonExistentImpl@5460958'
+10월 27, 2022 9:42:45 오전 org.hibernate.hql.internal.QueryTranslatorFactoryInitiator initiateService
+INFO: HHH000397: Using ASTQueryTranslatorFactory
+10월 27, 2022 9:42:45 오전 org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl stop
+INFO: HHH10001008: Cleaning up connection pool [jdbc:h2:tcp://localhost/~/jpa]
+10월 27, 2022 9:42:45 오전 org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl$PooledConnections close
+ERROR: Connection leak detected: there are 1 unclosed connections upon shutting down pool jdbc:h2:tcp://localhost/~/jpa
+]]></system-err>
+</testsuite>
