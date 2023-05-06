@@ -74,7 +74,7 @@ public class TwoWayTest {
 
             // then
             Team findTeam = entityManager.find(Team.class, team.getId());
-            assertThat(findTeam.getMembers()).hasSize(1); // 삭제했음에도 여전히 size가 1이다 (삭제되지 않음)
+            assertThat(findTeam.getMembers()).hasSize(1); // 삭제했음에도 여전히 size가 1이다 (실제 DB에선 삭제되지 않음)
         }));
     }
 }
