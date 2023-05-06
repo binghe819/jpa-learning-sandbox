@@ -28,7 +28,7 @@ public class OneWayTest {
 
             Team team = new Team();
             team.setName("TeamA");
-            team.getMembers().add(member); // 이 코드로 인해 쿼리가 날라간다. (MEMBER테이블에 UPDATE문을 날린다 -> 가장 큰 문제)
+            team.getMembers().add(member); // 이 코드로 인해 쿼리가 날라간다. (Team의 변경사항이에도 불구하고, MEMBER테이블에 UPDATE문을 날린다. -> 가장 큰 문제)
             entityManager.persist(team);
 
             entityManager.flush();

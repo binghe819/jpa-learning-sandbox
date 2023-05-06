@@ -49,7 +49,7 @@ public class TwoWayTest {
 
             // then
             Team resultTeam = entityManager.find(Team.class, team.getId());
-            assertThat(resultTeam.getMembers().size()).isEqualTo(1);
+            assertThat(resultTeam.getMembers().size()).isEqualTo(1); // Team에 두 명의 회원을 추가했다고 생각하지만, 실제 DB엔 한 명만 저장되어있다.
 
             tx.commit();
         } catch (Exception e) {
