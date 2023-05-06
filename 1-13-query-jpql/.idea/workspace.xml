@@ -5,7 +5,98 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="38a59a67-0ba0-487f-a5c1-271362a1d67e" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/../1-13-query-jpal/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1-13-query-jpal/.gradle/6.8/executionHistory/executionHistory.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1-13-query-jpal/.gradle/6.8/executionHistory/executionHistory.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1-13-query-jpal/.gradle/6.8/fileChanges/last-build.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1-13-query-jpal/.gradle/6.8/fileHashes/fileHashes.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1-13-query-jpal/.gradle/6.8/fileHashes/fileHashes.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1-13-query-jpal/.gradle/6.8/fileHashes/resourceHashesCache.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1-13-query-jpal/.gradle/6.8/gc.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1-13-query-jpal/.gradle/6.8/javaCompile/classAnalysis.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1-13-query-jpal/.gradle/6.8/javaCompile/jarAnalysis.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1-13-query-jpal/.gradle/6.8/javaCompile/javaCompile.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1-13-query-jpal/.gradle/6.8/javaCompile/taskHistory.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1-13-query-jpal/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1-13-query-jpal/.gradle/buildOutputCleanup/cache.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1-13-query-jpal/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1-13-query-jpal/.gradle/checksums/checksums.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1-13-query-jpal/.gradle/configuration-cache/gc.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1-13-query-jpal/.gradle/vcs-1/gc.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1-13-query-jpal/.idea/sonarlint/issuestore/index.pb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1-13-query-jpal/.idea/sonarlint/securityhotspotstore/index.pb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1-13-query-jpal/.idea/workspace.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1-13-query-jpal/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1-13-query-jpal/build.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1-13-query-jpal/build/classes/java/main/com/binghe/Address.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1-13-query-jpal/build/classes/java/main/com/binghe/Member.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1-13-query-jpal/build/classes/java/main/com/binghe/MemberDto.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1-13-query-jpal/build/classes/java/main/com/binghe/Order.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1-13-query-jpal/build/classes/java/main/com/binghe/Product.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1-13-query-jpal/build/classes/java/main/com/binghe/Team.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1-13-query-jpal/build/classes/java/test/com/binghe/BulkOperationTest.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1-13-query-jpal/build/classes/java/test/com/binghe/JoinTest.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1-13-query-jpal/build/classes/java/test/com/binghe/PagingApiTest.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1-13-query-jpal/build/classes/java/test/com/binghe/ParameterBindingTest.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1-13-query-jpal/build/classes/java/test/com/binghe/PathExpressionTest.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1-13-query-jpal/build/classes/java/test/com/binghe/ProjectionTest.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1-13-query-jpal/build/classes/java/test/com/binghe/ResultApiTest.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1-13-query-jpal/build/classes/java/test/com/binghe/SetAndSortTest.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1-13-query-jpal/build/classes/java/test/com/binghe/TestExample.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1-13-query-jpal/build/classes/java/test/com/binghe/TypeQueryAndQueryTest.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1-13-query-jpal/build/reports/tests/test/classes/com.binghe.BulkOperationTest.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1-13-query-jpal/build/reports/tests/test/classes/com.binghe.JoinTest.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1-13-query-jpal/build/reports/tests/test/classes/com.binghe.PagingApiTest.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1-13-query-jpal/build/reports/tests/test/classes/com.binghe.ParameterBindingTest.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1-13-query-jpal/build/reports/tests/test/classes/com.binghe.PathExpressionTest.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1-13-query-jpal/build/reports/tests/test/classes/com.binghe.ProjectionTest.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1-13-query-jpal/build/reports/tests/test/classes/com.binghe.ResultApiTest.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1-13-query-jpal/build/reports/tests/test/classes/com.binghe.SetAndSortTest.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1-13-query-jpal/build/reports/tests/test/classes/com.binghe.TestExample.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1-13-query-jpal/build/reports/tests/test/classes/com.binghe.TypeQueryAndQueryTest.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1-13-query-jpal/build/reports/tests/test/css/base-style.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1-13-query-jpal/build/reports/tests/test/css/style.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1-13-query-jpal/build/reports/tests/test/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1-13-query-jpal/build/reports/tests/test/js/report.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1-13-query-jpal/build/reports/tests/test/packages/com.binghe.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1-13-query-jpal/build/resources/main/META-INF/persistence.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1-13-query-jpal/build/test-results/test/TEST-com.binghe.BulkOperationTest.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1-13-query-jpal/build/test-results/test/TEST-com.binghe.JoinTest.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1-13-query-jpal/build/test-results/test/TEST-com.binghe.PagingApiTest.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1-13-query-jpal/build/test-results/test/TEST-com.binghe.ParameterBindingTest.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1-13-query-jpal/build/test-results/test/TEST-com.binghe.PathExpressionTest.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1-13-query-jpal/build/test-results/test/TEST-com.binghe.ProjectionTest.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1-13-query-jpal/build/test-results/test/TEST-com.binghe.ResultApiTest.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1-13-query-jpal/build/test-results/test/TEST-com.binghe.SetAndSortTest.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1-13-query-jpal/build/test-results/test/TEST-com.binghe.TestExample.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1-13-query-jpal/build/test-results/test/TEST-com.binghe.TypeQueryAndQueryTest.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1-13-query-jpal/build/test-results/test/binary/output.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1-13-query-jpal/build/test-results/test/binary/output.bin.idx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1-13-query-jpal/build/test-results/test/binary/results.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1-13-query-jpal/build/tmp/compileJava/source-classes-mapping.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1-13-query-jpal/build/tmp/compileTestJava/source-classes-mapping.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1-13-query-jpal/gradle/wrapper/gradle-wrapper.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1-13-query-jpal/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1-13-query-jpal/gradlew" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1-13-query-jpal/gradlew.bat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1-13-query-jpal/settings.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1-13-query-jpal/src/main/java/com/binghe/Address.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1-13-query-jpal/src/main/java/com/binghe/Member.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1-13-query-jpal/src/main/java/com/binghe/MemberDto.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1-13-query-jpal/src/main/java/com/binghe/Order.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1-13-query-jpal/src/main/java/com/binghe/Product.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1-13-query-jpal/src/main/java/com/binghe/Team.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1-13-query-jpal/src/main/resources/META-INF/persistence.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1-13-query-jpal/src/test/java/com/binghe/BulkOperationTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1-13-query-jpal/src/test/java/com/binghe/JoinTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1-13-query-jpal/src/test/java/com/binghe/PagingApiTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1-13-query-jpal/src/test/java/com/binghe/ParameterBindingTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1-13-query-jpal/src/test/java/com/binghe/PathExpressionTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1-13-query-jpal/src/test/java/com/binghe/ProjectionTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1-13-query-jpal/src/test/java/com/binghe/ResultApiTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1-13-query-jpal/src/test/java/com/binghe/SetAndSortTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1-13-query-jpal/src/test/java/com/binghe/TestExample.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1-13-query-jpal/src/test/java/com/binghe/TypeQueryAndQueryTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../1-2-persistence-context/.idea/sonarlint/issuestore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/../1-2-persistence-context/.idea/sonarlint/issuestore/index.pb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../1-2-persistence-context/.idea/sonarlint/securityhotspotstore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/../1-2-persistence-context/.idea/sonarlint/securityhotspotstore/index.pb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../1-3-relation-mapping-owner-of-relationship/.idea/sonarlint/issuestore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/../1-3-relation-mapping-owner-of-relationship/.idea/sonarlint/issuestore/index.pb" afterDir="false" />
@@ -37,6 +128,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="nodejs_package_manager_path" value="npm" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RunManager">
@@ -77,9 +169,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1683368027822</updated>
-      <workItem from="1683368029107" duration="1000" />
+      <workItem from="1683368029107" duration="457000" />
     </task>
     <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
