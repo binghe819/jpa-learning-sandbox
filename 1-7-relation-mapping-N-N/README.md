@@ -2,10 +2,12 @@
 
 <br>
 
-## 학습 테스트 내용
-- [N : N 단방향 테스트](./src/test/java/com/binghe/one_way/OneWayTest.java)
-- [N : N 양방향 테스트](./src/test/java/com/binghe/two_way/TwoWayTest.java)
-- [N : N -> 1 : N + N + 1 테스트](./src/test/java/com/binghe/one_to_many_many_to_one/OneToManyManyToOneTest.java)
+- [JPA 놀이터](#jpa-놀이터)
+- [다대다 N : N](#다대다-n--n)
+  - [DB와 객체에서의 다대다](#db와-객체에서의-다대다)
+  - [JPA 다대다 사용법](#jpa-다대다-사용법)
+  - [다대다의 한계와 극복 방법](#다대다의-한계와-극복-방법)
+  - [키 생성 전략](#키-생성-전략)
 
 <br>
 
