@@ -86,22 +86,24 @@
 
 ### 컬렉션은 필드에서 초기화하자 (Best Practice라고 함)
 * `null`문제에서 안전
-* 하이버네이트는 아래와 같이 엔티티를 영속화할 때, 자체적인 컬렉션으로 한번 더 감싼다고 한다. (컬렉션을 추적하기 위함)
+* 하이버네이트가 엔티티를 영속화 할 때 내부에서 컬렉션이 있으면 특별하게 조작한 컬렉션으로 한번 더 감싼다. 이는 컬렉션의 추가 및 변경을 추적하기 위함이다.
+  * 이로인해 실제 참조가 변경되는데, 개발자가 임의로 나중에 `setter`나 `new ArrayList`로 초기화를 하게되면 이 부분이 하이버네이트가 관리하는 컬렉션에서 개발작 직접 만든 컬렉션으로 변경된다.
+  * 그러면 하이버네이트는 컬렉션의 변경을 추적할 수 없기에 정상 동작하지않는다. 이런 문제를 방지하기 위해 필드에서 빠르게 컬렉션을 초기화하고, 해당 컬렉션을 바꾸는 행위를 막도록 코드를 작성하는 것이 좋다.
   * 아래 예시의 `getOrders()`처럼 임의의 메서드에서 컬렉션을 잘못 생각하면 하이버네이트 내부 매커니즘에 문제가 발생할 수 있다고 한다.
   * 따라서 필드레벨에서 생성하는 것이 좋다고 함
 
 ```java
 Member member = new Member();
 System.out.println(member.getOrders().getClass());
-em.persist(team);
+em.persist(member);
 System.out.println(member.getOrders().getClass());
 
 // 누군가가 아래와 같이 영속화된 컬렉션을 setter하면 영속성 컨텍스트를 전혀 활용하지 못하게 된다.
 member.setOrders(...); // 문제의 코드
 
 //출력 결과
-class java.util.ArrayList
-class org.hibernate.collection.internal.PersistentBag
+class java.util.ArrayList                                    // 기존의 일반적인 컬렉션
+class org.hibernate.collection.internal.PersistentBag        // 하이버네이트가 감싼 컬렉션
 ```
 > 가능한 엔티티안의 컬렉션은 바꾸지 말고, 처음 생성한 그대로 사용하는 것이 좋다. 아님 하이버네이트의 기능을 사용하지 못할 수도 있다!
 
