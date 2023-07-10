@@ -20,3 +20,7 @@
 - 객체지향 쿼리 언어
     - [JPQL](1-13-query-jpql)
     - [fetch join](1-14-query-fetch-join)
+- [Spring Boot와 JPA 활용 1](1-15-spring-boot-jpa-example-1)
+- [Spring Boot와 JPA 활용 2](1-16-spring-boot-jpa-example-2)
+- [Spring Data JPA](1-17-spring-data-jpa)
+
